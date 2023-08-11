@@ -6,6 +6,7 @@ function CreateAccount() {
   return (
     <>
       <div className="content">
+        Create account
       </div>
     </>
   );
