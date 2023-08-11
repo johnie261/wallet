@@ -19,7 +19,7 @@ function CreateAccount({ setSeedPhrase, setWallet }) {
     setWallet(ethers.Wallet.fromPhrase(newSeedPhrase).address)
   }
 
-  return (
+  return ( 
     <>
       <div className="content">
         <div className="mnemonic">
