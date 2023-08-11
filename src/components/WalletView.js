@@ -62,6 +62,105 @@ function WalletView({
 
    const navigate = useNavigate()
 
+   const items = [
+    {
+      key: "3",
+      label: `Tokens`,
+      children : (
+        <>
+          {tokens ? (
+            <>
+              <List 
+                bordered
+                itemLayout="horizontal"
+                dataSource={tokens}
+                renderItem={(item, index) => (
+                  <List.Item style={{textAlign: "left", color: "white"}}>
+                    <List.Item.Meta 
+                      avatar={<Avatar src={item.logo || logo} />}
+                      title={<span style={{ color: 'white' }}>{item.symbol}</span>}
+                      description={<span style={{ color: 'white' }}>{item.name}</span>}
+                    />
+                    <div>
+                      {(
+                        Number(item.balance) /
+                        10 ** Number(item.decimals)
+                      ).toFixed(2)}{" "}
+                      Tokens
+                    </div>
+                  </List.Item>
+                )}
+              />
+            </>
+          ) : (
+            <>
+              <span>You seem to not have any tokens yet</span>
+              <p className="frontPageBottom">
+                Find Alt Coin Gems:{" "}
+                <a
+                  href="https://moralismoney.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  money.moralis.io
+                </a>
+              </p>
+            </>
+          )}
+        </>
+      ),
+    },
+    {
+      key: "2",
+      label: `NFTs`,
+      children : (
+        <>
+          {nfts ? (
+            <>
+            {nfts.map((e, i) => {
+              return (
+                <>
+                  {e && (
+                    <img
+                      key={i}
+                      className="nftImage"
+                      alt="nftImage"
+                      src={e}
+                    />
+                  )}
+                </>
+              );
+            })}
+          </>
+          ) : (
+            <>
+            <span>You seem to not have any tokens yet</span>
+            <p className="frontPageBottom">
+              Find Alt Coin Gems:{" "}
+              <a
+                href="https://moralismoney.com/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                money.moralis.io
+              </a>
+            </p>
+          </>
+          )}
+        </>
+      ),
+    },
+    {
+      key: "1",
+      label: `Transfer`,
+      children : (
+        <>
+        Transfer
+        </>
+      )
+    },
+   ]
+
    const logout = () => {
     setWallet(null)
     setSeedPhrase(null)
@@ -74,6 +173,15 @@ function WalletView({
         <div className="logoutButton" onClick={logout}>
           <LogoutOutlined />
         </div>
+        <div className="walletName">Wallet</div>
+
+        <Tooltip title={wallet}>
+          <div>
+            {wallet.slice(0,4)}...{wallet.slice(-4)}
+          </div>
+        </Tooltip>
+
+        <Tabs defaultActiveKey="1" items={items} className="walletView" />
       </div>
     </>
   );
