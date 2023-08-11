@@ -96,6 +96,8 @@ header {
   min-height: 160px;
   padding: 5px;
   margin-top: 30px;
+  background-color: #151030;
+  color: #fff;
 }
 
 .walletName {
