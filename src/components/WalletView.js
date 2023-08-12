@@ -12,6 +12,7 @@ import {
 import { LogoutOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import logo from "../noImg.png";
+import axios from 'axios'
 
 const tokens = [
   {
@@ -60,6 +61,10 @@ function WalletView({
   selectedChain
 }) {
 
+   const [tokens, setTokens] = useState(null)
+   const [nfts, setNfts] = useState(null)
+   const [balance, setBalance] = useState(0)
+   const [fetching, setFetching] = useState(true)
    const navigate = useNavigate()
 
    const items = [
@@ -160,6 +165,29 @@ function WalletView({
       )
     },
    ]
+
+   const getAccountTokens = async () => {
+    setFetching(true)
+    const res = await axios.get(`http://localhost:3001/getTokens`, {
+      params: {
+        userAddress: wallet,
+        chain: selectedChain,
+      }
+    })
+
+    const response = res.data
+
+    if(response.tokens.length > 0) {
+      setTokens(response.tokens);
+    }
+
+    if(response.nfts.length > 0) {
+      setTokens(response.nfts);
+    }
+
+    setBalance(response.balance)
+    setFetching(false)
+   }
 
    const logout = () => {
     setWallet(null)
